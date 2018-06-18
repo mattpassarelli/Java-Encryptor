@@ -12,6 +12,8 @@ public class Main
 	{
 		System.out.println("Enter your string to encrypt: ");
 		str = scan.nextLine();
+		System.out.println("String is: " + str);
+		
 		
 		key = findMiddleDigitOfKey();
 	}
