@@ -3,49 +3,45 @@ import java.util.Scanner;
 
 public class Main
 {
-	private static Scanner scan = new Scanner(System.in);
-	private final static long time = System.currentTimeMillis();
-	private static int key = 0;
-	private static String str = "";
-	private static char[] charArray;
-	private static int[] ASCII;
-	private static String decrypted = "";
+	private static Scanner scan = new Scanner(System.in); 
 
 	public static void main(String[] args)
 	{
+		String str, decrypted = "";
+		char[] charArray;
+		int[] ASCII;
+		int key = 0;
+		long time = System.currentTimeMillis();
 
 		System.out.println("Enter your string to encrypt: ");
 		str = scan.nextLine();
 
-		key = findMiddleDigitOfKey();
-		System.out.println("YOUR KEY IS " + key);
-			
+		key = findMiddleDigitOfKey(time);
+
 		charArray = str.toCharArray();
 		ASCII = new int[charArray.length];
-		encrypt();
-		decrypt();
+		encrypt(charArray, ASCII, key);
+		decrypt(charArray, ASCII, key, decrypted);
 	}
 
-	private static void decrypt()
+	private static void decrypt(char[] charArray, int[] ASCII, int key, String decrypted)
 	{
 		for(int i = 0; i < ASCII.length; i++)
 		{
 			ASCII[i] = ASCII[i] / key;
-			System.out.print("DECRYPT: " + ASCII[i]);
 		}
-		
+
 		for(int i = 0; i < ASCII.length; i++)
 		{
 			String temp = Character.toString((char) ASCII[i]);
 			charArray[i] = temp.charAt(0);
 		}
-		
-		decrypted = new String (charArray);
-		System.out.println("Your decrypted string is " + decrypted);
-		System.out.println("This should be equal to " + str);
+
+		decrypted = new String(charArray);
+		System.out.println("Your decrypted string is: " + decrypted);
 	}
 
-	private static void encrypt()
+	private static void encrypt(char[] charArray, int[] ASCII, int key)
 	{
 		for(int i = 0; i < charArray.length; i++)
 		{
@@ -53,21 +49,22 @@ public class Main
 			ASCII[i] = (int) character;
 			charArray[i] = '0';
 		}
-		
-		
+
 		for(int i = 0; i < ASCII.length; i++)
 		{
 			ASCII[i] = ASCII[i] * key;
 		}
-		
+
 		System.out.println("Your new encrypted string is: ");
 		for(int i = 0; i < ASCII.length; i++)
 		{
 			System.out.print(ASCII[i] + " ");
 		}
+
+		System.out.println();
 	}
 
-	private static int findMiddleDigitOfKey()
+	private static int findMiddleDigitOfKey(long time)
 	{
 		int x = (int) time;
 		String num = Integer.toString(x);
@@ -84,6 +81,7 @@ public class Main
 				break;
 			}
 		}
+
 		return Integer.parseInt("" + num.charAt(n));
 	}
 
